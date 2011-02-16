@@ -19,7 +19,7 @@ Launch 2 instances of ami-e291668b in the same availability zone
       ruby ruby-devel rubygems curl-devel openssl-devel zlib-devel
 
 ### Clone SpeedMetal
-    git clone git://github.com/torquebox/speedmetal
+    git clone git://github.com/torquebox/speedmetal.git
 
 ### Install TorqueBox
     wget http://torquebox.org/torquebox-dev.zip
