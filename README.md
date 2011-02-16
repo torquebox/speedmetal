@@ -29,6 +29,7 @@ Launch 2 instances of ami-e291668b in the same availability zone
     export JBOSS_HOME=$TORQUEBOX_HOME/jboss
     export JRUBY_HOME=$TORQUEBOX_HOME/jruby
     export PATH=$JRUBY_HOME/bin:$PATH
+    change Xmx to 1024m in $JBOSS_HOME/bin/run.conf
 
 ### Install Passenger
     gem install passenger
