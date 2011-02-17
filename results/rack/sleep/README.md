@@ -29,7 +29,12 @@ Passenger expects all apps to have a public/ directory
     mkdir public
 
 ## Start Passenger
-    passenger start -p 8080 -e production
+
+For this test we need to update the default passenger standalone max
+pool size from 6 to the number of concurrent clients our test
+uses. So, 25, 50, 100, etc.
+
+    passenger start -p 8080 -e production --max-pool-size <concurrency of test>
 
 
 # Thin Setup
