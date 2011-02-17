@@ -1,7 +1,8 @@
 # Running Benchmarks
 
 ## Launch EC2 Instance
-Launch 2 instances of ami-e291668b in the same availability zone
+Launch 2 instances of ami-e291668b in the same availability
+zone with size m1.large.
 
 ## Configure Client Instance
     yum install make erlang R mercurial git wget
