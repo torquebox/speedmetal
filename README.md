@@ -18,6 +18,11 @@ Launch 2 instances of ami-e291668b in the same availability zone
     yum install java-1.6.0-openjdk wget unzip git make gcc gcc-c++ \
       ruby ruby-devel rubygems curl-devel openssl-devel zlib-devel
 
+### Increase Open File Limit
+TorqueBox recommends > 1024 open file limit and Passenger needs
+this when running high numbers of workers.
+    ulimit -n 4096
+
 ### Clone SpeedMetal
     git clone git://github.com/torquebox/speedmetal.git
 
