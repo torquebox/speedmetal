@@ -29,7 +29,7 @@ Passenger expects all apps to have a public/ directory
     mkdir public
 
 ## Start Passenger
-    passenger start -p 8080 -e production
+    passenger start -p 8080 -e production --max-pool-size N
 
 
 # Thin Setup
@@ -44,3 +44,21 @@ Passenger expects all apps to have a public/ directory
 ## Start Trinidad
     cd speedmetal/apps/rack/hello_world/  
     jruby -S trinidad -r -p 8080 -e production -t
+
+
+# Unicorn Setup
+
+## Write Config File
+Replace worker_processes below with the number of concurrent clients
+in the test.
+
+    cat << EOF > /tmp/unicorn.rb
+    worker_processes N
+    preload_app true
+    timeout 30
+    listen 8080, :backlog => 2048
+    EOF
+
+## Start Unicorn
+  cd speedmetal/apps/rack/sleep/
+  RACK_ENV=production unicorn -c /tmp/unicorn.rb
