@@ -6,8 +6,8 @@
     {driver, basho_bench_driver_http_raw}.
     {code_paths, ["deps/stats",
                   "deps/ibrowse"]}.
-    {key_generator, {int_to_str, {uniform_int, 32}}}.
-    {value_generator, {fixed_bin, 10000}}.
+    {key_generator, {int_to_str, {uniform_int, 20}}}.
+    {value_generator, {fixed_bin, 100}}.
     {operations, [{get, 1}]}.
     {http_raw_ips, ["10.192.65.140"]}.
     {http_raw_port, 8080}.
