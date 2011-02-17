@@ -45,3 +45,10 @@ this when running high numbers of workers.
 
 ### Install Trinidad
     jruby -S gem install trinidad
+
+## Other Notes
+
+After each server is started a browser/wget/curl/whatever hits the app
+to make sure it's up and then the benchmark is run. No warm-up is
+given to the app so the first minute or two of each benchmark will
+show how the server ramps up to load.
