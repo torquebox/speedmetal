@@ -49,9 +49,6 @@ Passenger expects all apps to have a public/ directory
 # Unicorn Setup
 
 ## Write Config File
-Replace worker_processes below with the number of concurrent clients
-in the test.
-
     cat << EOF > /tmp/unicorn.rb
     worker_processes N
     preload_app true
@@ -60,5 +57,5 @@ in the test.
     EOF
 
 ## Start Unicorn
-  cd speedmetal/apps/rack/sleep/
+  cd speedmetal/apps/rack/hello_world/
   RACK_ENV=production unicorn -c /tmp/unicorn.rb
