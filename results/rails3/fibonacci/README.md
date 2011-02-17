@@ -9,7 +9,7 @@
 # TorqueBox Setup
 
 ## Create TorqueBox deployment descriptor
-    rm $JBOSS_HOME/server/default/deploy/*-knob.yml
+    rm -f $JBOSS_HOME/server/default/deploy/*-knob.yml
     cat << EOF > $JBOSS_HOME/server/default/deploy/fibonacci-knob.yml
     ---
     application:
