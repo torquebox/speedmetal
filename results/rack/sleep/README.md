@@ -49,3 +49,21 @@ uses. So, 25, 50, 100, etc.
 ## Start Trinidad
     cd speedmetal/apps/rack/sleep/
     jruby -S trinidad -r -p 8080 -e production -t
+
+
+# Unicorn Setup
+
+## Write Config File
+Replace worker_processes below with the number of concurrent clients
+in the test.
+
+    cat << EOF > /tmp/unicorn.rb
+    worker_processes 100
+    preload_app true
+    timeout 30
+    listen 8080, :backlog => 2048
+    EOF
+
+## Start Unicorn
+  cd speedmetal/apps/rack/sleep/
+  RACK_ENV=production unicorn -c /tmp/unicorn.rb

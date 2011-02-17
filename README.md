@@ -47,6 +47,9 @@ this when running high numbers of workers.
 ### Install Trinidad
     jruby -S gem install trinidad
 
+### Install Unicorn
+    gem install unicorn
+
 ## Other Notes
 
 After each server is started a browser/wget/curl/whatever hits the app
