@@ -31,7 +31,8 @@ to have access to the application.
     cp -r speedmetal/apps/rails3/fibonacci/ /tmp/
 
 ## Start Passenger
-    RACK_ENV=production passenger start -p 8080
+    cd /tmp/fibonacci/
+    passenger start -p 8080 -e production
 
 
 # Thin Setup

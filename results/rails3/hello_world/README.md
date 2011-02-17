@@ -31,7 +31,8 @@ to have access to the application.
     cp -r speedmetal/apps/rails3/hello_world/ /tmp/
 
 ## Start Passenger
-    RACK_ENV=production passenger start -p 8080
+    cd /tmp/hello_world/
+    passenger start -p 8080 -e production
 
 
 # Thin Setup
