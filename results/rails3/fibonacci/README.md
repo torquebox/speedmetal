@@ -43,7 +43,7 @@ to have access to the application.
 
 ## Start Passenger
     cd /tmp/fibonacci/
-    passenger start -p 8080 -e production
+    passenger start -p 8080 -e production --max-pool-size N
 
 
 # Thin Setup
