@@ -9,7 +9,7 @@ zone with size m1.large.
     wget http://cran.r-project.org/src/contrib/getopt_1.15.tar.gz
     tar xzf getopt_1.15.tar.gz
     R CMD INSTALL getopt
-    git clone git://github.com/basho/basho_bench.git
+    git clone git://github.com/torquebox/basho_bench.git
     cd basho_bench
     make
 
