@@ -12,12 +12,12 @@ class KeysController < ApplicationController
     @key = params[:id]
     @value = request.raw_post
     Rails.cache.write(@key, @value)
-    head :ok
+    render :json => { @key => @value }
   end
 
   def destroy
     @key = params[:id]
     Rails.cache.delete(@key)
-    head :ok
+    render :json => { @key => @value }
   end
 end
