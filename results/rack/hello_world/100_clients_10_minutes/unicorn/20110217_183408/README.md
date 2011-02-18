@@ -1,4 +1,4 @@
-20 workers
+20 workers - tested at 100 workers but didn't impact req/s
 
 during test
 [root@domU-12-31-39-0E-42-62 hello_world]# free -m
