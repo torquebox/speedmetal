@@ -47,3 +47,18 @@ to have access to the application.
 ## Start Trinidad
     cd speedmetal/apps/rails3/fibonacci/
     jruby -S trinidad -r -p 8080 -e production -t
+
+
+# Unicorn Setup
+
+## Write Config File
+    cat << EOF > /tmp/unicorn.rb
+    worker_processes N
+    preload_app true
+    timeout 30
+    listen 8080, :backlog => 2048
+    EOF
+
+## Start Unicorn
+    cd speedmetal/apps/rails3/fibonacci/
+    unicorn_rails -E production -c /tmp/unicorn.rb
