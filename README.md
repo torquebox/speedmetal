@@ -19,6 +19,9 @@ zone with size m1.large.
     yum install java-1.6.0-openjdk wget unzip git make gcc gcc-c++ \
       ruby ruby-devel rubygems curl-devel openssl-devel zlib-devel
 
+### Install Memcached
+    yum install memcached
+
 ### Increase Open File Limit
 TorqueBox recommends > 1024 open file limit and Passenger needs
 this when running high numbers of workers.
