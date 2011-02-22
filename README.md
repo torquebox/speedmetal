@@ -65,5 +65,5 @@ show how the server ramps up to load.
 
 ## Throughput Comparison
     export RESULTS_DIR="results/rack/hello_world/10_clients_10_minutes"
-    latest_result() { ls -1 $1 | tail -n 1 | sed "s:^:$1/:"; }
+    latest_result() { find $1 -type d -depth 1 | tail -n 1; }
     ./scripts/compare.r -o $RESULTS_DIR/comparison.png --dir1 `latest_result $RESULTS_DIR/torquebox/` --tag1 TorqueBox --dir2 `latest_result $RESULTS_DIR/trinidad/` --tag2 Trinidad --dir3 `latest_result $RESULTS_DIR/unicorn/` --tag3 Unicorn --dir4 `latest_result $RESULTS_DIR/passenger/` --tag4 Passenger --dir5 `latest_result $RESULTS_DIR/thin/` --tag5 Thin
