@@ -32,37 +32,45 @@ if (is.null(opt$width))   { opt$width   = 1024 }
 if (is.null(opt$height))  { opt$height  = 256 }
 if (is.null(opt$outfile)) { opt$outfile = "compare.png" }
 
+fake_data = list(summary = data.frame(elapsed = c(10, 20, 30),
+                                      total   = c(1, 2, 3),
+                                      window  = c(10, 10, 10)))
+
 # Load the benchmark data for each directory
-b1 = load_benchmark(opt$dir1)
-b2 = load_benchmark(opt$dir2)
-if (!is.null(opt$dir3)) { b3 = load_benchmark(opt$dir3) }
-if (!is.null(opt$dir4)) { b4 = load_benchmark(opt$dir4) }
-if (!is.null(opt$dir5)) { b5 = load_benchmark(opt$dir5) }
-
-# If there is no actual data available, bail
-if (nrow(b1$latencies) == 0)
-{
-  stop("No latency information available to analyze in ", opt$indir)
+if (!is.null(opt$dir1)) {
+  b1 = load_benchmark(opt$dir1)
+  b1_size = 1.5
+} else {
+  b1 = fake_data
+  b1_size = 0.0
 }
-
-if (nrow(b2$latencies) == 0)
-{
-  stop("No latency information available to analyze in ", opt$indir)
+if (!is.null(opt$dir2)) {
+  b2 = load_benchmark(opt$dir2)
+  b2_size = 1.5
+} else {
+  b2 = fake_data
+  b2_size = 0.0
 }
-
-if (!is.null(opt$dir3) && nrow(b3$latencies) == 0)
-{
-  stop("No latency information available to analyze in ", opt$indir)
+if (!is.null(opt$dir3)) {
+  b3 = load_benchmark(opt$dir3)
+  b3_size = 1.5
+} else {
+  b3 = fake_data
+  b3_size = 0.0
 }
-
-if (!is.null(opt$dir4) && nrow(b4$latencies) == 0)
-{
-  stop("No latency information available to analyze in ", opt$indir)
+if (!is.null(opt$dir4)) {
+  b4 = load_benchmark(opt$dir4)
+  b4_size = 1.5
+} else {
+  b4 = fake_data
+  b4_size = 0.0
 }
-
-if (!is.null(opt$dir5) && nrow(b5$latencies) == 0)
-{
-  stop("No latency information available to analyze in ", opt$indir)
+if (!is.null(opt$dir5)) {
+  b5 = load_benchmark(opt$dir5)
+  b5_size = 1.5
+} else {
+  b5 = fake_data
+  b5_size = 0.0
 }
 
 png(file = opt$outfile, width = opt$width, height = opt$height)
@@ -70,7 +78,7 @@ png(file = opt$outfile, width = opt$width, height = opt$height)
 # Tag the summary frames for each benchmark so that we can distinguish
 # between them in the legend.
 b1$summary$server <- opt$tag1
-b2$summary$server <- opt$tag2
+if (!is.null(opt$tag2)) { b2$summary$server <- opt$tag2 }
 if (!is.null(opt$tag3)) { b3$summary$server <- opt$tag3 }
 if (!is.null(opt$tag4)) { b4$summary$server <- opt$tag4 }
 if (!is.null(opt$tag5)) { b5$summary$server <- opt$tag5 }
@@ -80,18 +88,20 @@ plot1 <- qplot(elapsed, total / window,
                data = b1$summary,
                color = server,
                geom = "smooth",
-               size = I(1.1),
+               size = I(b1_size),
                xlab = "Elapsed Secs",
                ylab = "Req/sec",
-               main = "Throughput") + geom_smooth(data = b2$summary, size = 1.1)
-if (!is.null(opt$dir3)) { plot1 <- plot1 + geom_smooth(data = b3$summary, size = 1.1) }
-if (!is.null(opt$dir4)) { plot1 <- plot1 + geom_smooth(data = b4$summary, size = 1.1) }
-if (!is.null(opt$dir5)) { plot1 <- plot1 + geom_smooth(data = b5$summary, size = 1.1) }
+               main = "Throughput")
+plot1 <- plot1 + geom_smooth(data = b2$summary, size = b2_size, alpha = 0)
+plot1 <- plot1 + geom_smooth(data = b3$summary, size = b3_size, alpha = 0)
+plot1 <- plot1 + geom_smooth(data = b4$summary, size = b4_size, alpha = 0)
+plot1 <- plot1 + geom_smooth(data = b5$summary, size = b5_size, alpha = 0)
 
 # Style the grid
-#plot1 <- plot1 + opts(panel.background=theme_rect(fill="white"),
-#                      panel.grid.major=theme_line("gray", size=0.3),
-#                      panel.grid.minor=theme_line("gray", size=0.2))
+# plot1 <- plot1 + opts(panel.background=theme_rect(fill="white"),
+#                      panel.grid.major=theme_line("gray", size=0.5),
+#                      panel.grid.minor=theme_line("gray", size=0.3),
+#                      legend.key = theme_rect(fill = "black"))
 plot1 <- plot1 + opts(panel.grid.major=theme_line("white", size=0.6),
                       panel.grid.minor=theme_line("white", size=0.5))
 
