@@ -59,3 +59,11 @@ After each server is started a browser/wget/curl/whatever hits the app
 to make sure it's up and then the benchmark is run. No warm-up is
 given to the app so the first minute or two of each benchmark will
 show how the server ramps up to load.
+
+
+# Generating Graphs
+
+## Throughput Comparison
+    export RESULTS_DIR="results/rack/hello_world/10_clients_10_minutes"
+    latest_result() { ls -1 $1 | tail -n 1 | sed "s:^:$1/:"; }
+    ./scripts/compare.r -o $RESULTS_DIR/comparison.png --dir1 `latest_result $RESULTS_DIR/torquebox/` --tag1 TorqueBox --dir2 `latest_result $RESULTS_DIR/trinidad/` --tag2 Trinidad --dir3 `latest_result $RESULTS_DIR/unicorn/` --tag3 Unicorn --dir4 `latest_result $RESULTS_DIR/passenger/` --tag4 Passenger --dir5 `latest_result $RESULTS_DIR/thin/` --tag5 Thin
