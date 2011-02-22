@@ -75,17 +75,25 @@ if (!is.null(opt$tag3)) { b3$summary$server <- opt$tag3 }
 if (!is.null(opt$tag4)) { b4$summary$server <- opt$tag4 }
 if (!is.null(opt$tag5)) { b5$summary$server <- opt$tag5 }
 
-# Compare the req/sec between the two datasets
+# Compare the req/sec between the datasets
 plot1 <- qplot(elapsed, total / window,
                data = b1$summary,
                color = server,
                geom = "smooth",
+               size = I(1.1),
                xlab = "Elapsed Secs",
                ylab = "Req/sec",
-               main = "Throughput") + geom_smooth(data = b2$summary)
-if (!is.null(opt$dir3)) { plot1 <- plot1 + geom_smooth(data = b3$summary) }
-if (!is.null(opt$dir4)) { plot1 <- plot1 + geom_smooth(data = b4$summary) }
-if (!is.null(opt$dir5)) { plot1 <- plot1 + geom_smooth(data = b5$summary) }
+               main = "Throughput") + geom_smooth(data = b2$summary, size = 1.1)
+if (!is.null(opt$dir3)) { plot1 <- plot1 + geom_smooth(data = b3$summary, size = 1.1) }
+if (!is.null(opt$dir4)) { plot1 <- plot1 + geom_smooth(data = b4$summary, size = 1.1) }
+if (!is.null(opt$dir5)) { plot1 <- plot1 + geom_smooth(data = b5$summary, size = 1.1) }
+
+# Style the grid
+#plot1 <- plot1 + opts(panel.background=theme_rect(fill="white"),
+#                      panel.grid.major=theme_line("gray", size=0.3),
+#                      panel.grid.minor=theme_line("gray", size=0.2))
+plot1 <- plot1 + opts(panel.grid.major=theme_line("white", size=0.6),
+                      panel.grid.minor=theme_line("white", size=0.5))
 
 grid.newpage()
 
