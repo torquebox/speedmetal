@@ -1,4 +1,9 @@
-# Running Benchmarks
+# Setup
+
+These instructions are for running a benchmark against a single
+server. You'll need to repeat the instructions for each server you
+want to benchmark, substituting in the specific server installation
+instructions from the next section.
 
 ## Configure Tsung Instance
 
@@ -13,7 +18,7 @@ on my Mac, I had to
 
 ### Install Necessary RPMs
 
-    sudo yum install erlang wget make git
+    sudo yum install erlang wget make git perl-Template-Toolkit gnuplot
 
 ### Clone SpeedMetal
     git clone git://github.com/torquebox/speedmetal.git
@@ -25,28 +30,83 @@ on my Mac, I had to
     ./configure
     make
     sudo make install
+    cd ../
 
 
-## Configure TorqueBox Instance
+## Configure Server Instance
 
 ### Lanch EC2 Instance
 
 Launch instance of ami-e291668b with size m1.large in the same
 availability zone and security group as the Tsung instance.
 
-### Install Necessary RPMs
-    sudo yum install java-1.6.0-openjdk wget unzip erlang git
-
 ### Create writable directory under /mnt so we don't run out of HDD space
     sudo mkdir /mnt/data
     sudo chmod 777 /mnt/data
     cd /mnt/data
 
+### Install Necessary RPMs
+    sudo yum install erlang git
+
 ### Clone SpeedMetal
     git clone git://github.com/torquebox/speedmetal.git
 
-### Install TorqueBox
+### Install Server
 
+Please see the appropriate section below for the details of installing
+each server's needed software.
+
+
+## Launch RDS Instance
+
+Engine: mysql  
+DB Instance Class: db.m1.large  
+DB Engine Version: default  
+Auto Minor Version Upgrade: Yes  
+Multi-AZ Deployment: No  
+
+Allocated Storage: 5 GB  
+DB Instance Identifier: whatever  
+Master User Name: benchmarks  
+Master User Password: benchmarks  
+
+Database Name: benchmark  
+Database Port: 3306  
+Availability Zone: same as other instances  
+DB Parameter Group: default  
+DB Security Group: benchmarks (new one created that only gives access  
+                   from machines in benchmarks EC2 security group)
+
+Backup Retention Period: 0 days  
+Maintenance Window: No Preference
+
+
+## Configure /etc/host
+
+Add a host entry for database pointing to the IP of your Amazon RDS
+instance on the server instance:
+
+    sudo su
+    echo "10.xxx.xxx.xxx database" >> /etc/hosts
+    exit
+
+Add a host entry for server pointing to the IP of your server instance
+on the Tsung instance:
+
+    sudo su
+    echo "10.xxx.xxx.xxx server" >> /etc/hosts
+    exit
+
+
+
+# Server Installations
+
+## TorqueBox
+
+### Install prerequisites
+    sudo yum install java-1.6.0-openjdk wget unzip
+
+### Install TorqueBox
     wget http://torquebox.org/torquebox-dev.zip
     unzip torquebox-dev.zip
     ln -s torquebox-1.0.0.CR1-SNAPSHOT/ torquebox-current
@@ -58,8 +118,7 @@ availability zone and security group as the Tsung instance.
     change Xmx to 1024m in $JBOSS_HOME/bin/run.conf
     jruby -S gem install jruby-openssl
 
-Increase ulimit
-
+### Increase ulimit
     sudo su
     echo "ec2-user hard nofile 4096" >> /etc/security/limits.conf
     echo "ec2-user shoft nofile 4096" >> /etc/security/limits.conf
@@ -68,45 +127,20 @@ Increase ulimit
 Log out and back in to pick up the new ulimit
 
 
-## Launch RDS Instance
+## Passenger
 
-Engine: mysql
-DB Instance Class: db.m1.small  
-DB Engine Version: default
-Auto Minor Version Upgrade: Yes
-Multi-AZ Deployment: No
+### Install prerequisites
+    sudo yum install ruby ruby-devel rubygems make gcc gcc-c++ \
+    curl-devel openssl-devel zlib-devel
 
-Allocated Storage: 5 GB
-DB Instance Identifier: torqueboxbenchmark
-Master User Name: benchmarks
-Master User Password: benchmarks
-
-Database Name: benchmark
-Database Port: 3306
-Availability Zone: same as other instances
-DB Parameter Group: default
-DB Security Group: benchmarks (new one created that only gives access
-                   from machines in benchmarks EC2 security group)
-
-Backup Retention Period: 0 days
-Maintenance Window: No Preference
+### Install Passenger
+    sudo gem install passenger
 
 
-## Configure /etc/host
 
-Add a host entry for database pointing to the IP of your Amazon RDS
-instance on TorqueBox and other server instances:
 
-    sudo su
-    echo "10.xxx.xxx.xxx database" >> /etc/hosts
-    exit
 
-Add a host entry for server pointing to the IP of your TorqueBox or
-other server instance on the Tsung instance:
 
-    sudo su
-    echo "10.xxx.xxx.xxx server" >> /etc/hosts
-    exit
 
 
 # Old Instructions Below
