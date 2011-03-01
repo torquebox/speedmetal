@@ -28,3 +28,14 @@ config.action_mailer.raise_delivery_errors = false
 
 # No email in production log
 config.action_mailer.logger = nil
+
+
+# Like config.threadsafe! but leave dependency loading enabled
+# since JRuby makes require threadsafe and redmine wasn't written
+# with dependency loading disabled in mind
+if defined?(JRUBY_VERSION)
+  config.preload_frameworks = true
+  config.cache_classes = true
+  config.dependency_loading = true # normally false w/ threadsafe!
+  config.action_controller.allow_concurrency = true
+end
