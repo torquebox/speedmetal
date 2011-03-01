@@ -13,7 +13,10 @@ on my Mac, I had to
 
 ### Install Necessary RPMs
 
-    sudo yum install erlang wget make
+    sudo yum install erlang wget make git
+
+### Clone SpeedMetal
+    git clone git://github.com/torquebox/speedmetal.git
 
 ### Install Tsung
     wget http://tsung.erlang-projects.org/dist/tsung-1.3.3.tar.gz
@@ -34,6 +37,11 @@ availability zone and security group as the Tsung instance.
 ### Install Necessary RPMs
     sudo yum install java-1.6.0-openjdk wget unzip erlang git
 
+### Create writable directory under /mnt so we don't run out of HDD space
+    sudo mkdir /mnt/data
+    sudo chmod 777 /mnt/data
+    cd /mnt/data
+
 ### Clone SpeedMetal
     git clone git://github.com/torquebox/speedmetal.git
 
@@ -42,7 +50,7 @@ availability zone and security group as the Tsung instance.
     wget http://torquebox.org/torquebox-dev.zip
     unzip torquebox-dev.zip
     ln -s torquebox-1.0.0.CR1-SNAPSHOT/ torquebox-current
-    echo "export TORQUEBOX_HOME=/home/ec2-user/torquebox-current" >> ~/.bash_profile
+    echo "export TORQUEBOX_HOME=/mnt/data/torquebox-current" >> ~/.bash_profile
     echo "export JBOSS_HOME=\$TORQUEBOX_HOME/jboss" >> ~/.bash_profile
     echo "export JRUBY_HOME=\$TORQUEBOX_HOME/jruby" >> ~/.bash_profile
     echo "export PATH=\$JRUBY_HOME/bin:\$PATH" >> ~/.bash_profile
@@ -82,6 +90,23 @@ DB Security Group: benchmarks (new one created that only gives access
 
 Backup Retention Period: 0 days
 Maintenance Window: No Preference
+
+
+## Configure /etc/host
+
+Add a host entry for database pointing to the IP of your Amazon RDS
+instance on TorqueBox and other server instances:
+
+    sudo su
+    echo "10.xxx.xxx.xxx database" >> /etc/hosts
+    exit
+
+Add a host entry for server pointing to the IP of your TorqueBox or
+other server instance on the Tsung instance:
+
+    sudo su
+    echo "10.xxx.xxx.xxx server" >> /etc/hosts
+    exit
 
 
 # Old Instructions Below

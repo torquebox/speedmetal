@@ -22,7 +22,7 @@ Create a deployment descriptor
     cat << EOF > $JBOSS_HOME/server/default/deploy/redmine-knob.yml
     ---
     application:
-      root: /home/ec2-user/speedmetal/apps/rails2/redmine-1.1.1/
+      root: /mnt/data/speedmetal/apps/rails2/redmine-1.1.1/
       env: production
     web:
       context: /
@@ -31,3 +31,8 @@ Create a deployment descriptor
 Start TorqueBox
 
     $JBOSS_HOME/bin/run.sh -b 0.0.0.0
+
+
+# Run Benchmark
+
+    tsung -f speedmetal/apps/rails2/redmine-1.1.1/tsung.xml start
