@@ -33,4 +33,8 @@ sudo make install
 cd ../
 
 # Add /etc/hosts entry for our server instance
-echo "$SERVER_IP server" >> sudo tee -a /etc/hosts
+echo "$SERVER_IP server" | sudo tee -a /etc/hosts
+
+echo ""
+echo "Client Setup Finished Successfully"
+echo ""

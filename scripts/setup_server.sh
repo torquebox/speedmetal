@@ -30,7 +30,7 @@ sudo yum install -y erlang git
 git clone git://github.com/torquebox/speedmetal.git
 
 # Add /etc/hosts entry for our RDS instance
-echo "$RDS_IP database" >> sudo tee -a /etc/hosts
+echo "$RDS_IP database" | sudo tee -a /etc/hosts
 
 case "$SERVER_TYPE" in
     torquebox)
@@ -47,8 +47,8 @@ case "$SERVER_TYPE" in
         source ~/.bash_profile
         jruby -S gem install jruby-openssl
         # Increase open file limit
-        echo "ec2-user hard nofile 4096" >> sudo tee -a /etc/security/limits.conf
-        echo "ec2-user shoft nofile 4096" >> sudo tee -a /etc/security/limits.conf
+        echo "ec2-user hard nofile 4096" | sudo tee -a /etc/security/limits.conf
+        echo "ec2-user shoft nofile 4096" | sudo tee -a /etc/security/limits.conf
         sudo ulimit -n 4096
         ;;
     trinidad)
@@ -79,3 +79,7 @@ case "$SERVER_TYPE" in
         sudo gem install unicorn
         ;;
 esac
+
+echo ""
+echo "$SERVER_TYPE Server Setup Finished Successfully"
+echo ""
