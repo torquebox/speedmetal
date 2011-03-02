@@ -33,6 +33,52 @@ git clone git://github.com/torquebox/speedmetal.git
 # Add /etc/hosts entry for our RDS instance
 echo "$RDS_IP database" | sudo tee -a /etc/hosts
 
+
+install_ruby() {
+    sudo yum install -y ruby ruby-devel rubygems make gcc gcc-c++ \
+        curl-devel openssl-devel zlib-devel
+}
+
+install_jruby() {
+    # Install necessary RPMs
+    sudo yum install -y java-1.6.0-openjdk wget
+    # Install JRuby
+    wget http://jruby.org.s3.amazonaws.com/downloads/1.5.6/jruby-bin-1.5.6.tar.gz
+    tar xf jruby-bin-1.5.6.tar.gz
+    echo "export JRUBY_HOME=/mnt/data/jruby-1.5.6" >> ~/.bash_profile
+    echo "export PATH=\$JRUBY_HOME/bin:\$PATH" >> ~/.bash_profile
+    source ~/.bash_profile
+    jruby -S gem install jruby-openssl
+}
+
+install_ree() {
+    sudo yum install -y patch
+    wget http://rubyenterpriseedition.googlecode.com/files/ruby-enterprise-1.8.7-2011.03.tar.gz
+    tar xzf ruby-enterprise-1.8.7-2011.03.tar.gz
+    PREFIX=/mnt/data/ree
+    cd ruby-enterprise-1.8.7-2011.03/source/distro/google-perftools-1.7/
+    ./configure --prefix=$PREFIX --disable-dependency-tracking
+    make libtcmalloc_minimal.la
+    mkdir -p $PREFIX/lib
+    cp -Rpf .libs/libtcmalloc_minimal*.so* $PREFIX/lib/
+    cd ../..
+    ./configure --prefix=$PREFIX --enable-mbari-api CFLAGS='-g -O2'
+    sed -i 's/^LIBS = /LIBS = $(PRELIBS) /' Makefile
+    make PRELIBS="-Wl,-rpath,$PREFIX/lib -L$PREFIX/lib -ltcmalloc_minimal"
+    sudo make install
+    sudo mv /usr/bin/ruby /usr/bin/ruby.old
+    sudo cp $PREFIX/bin/ruby /usr/bin/
+    cd ../..
+    echo "export PATH=$PREFIX/bin:\$PATH" >> ~/.bash_profile
+    source ~/.bash_profile
+    # Install RubyGems < 1.5.x to work w/ Redmine
+    wget http://production.cf.rubygems.org/rubygems/rubygems-1.4.2.tgz
+    tar xzf rubygems-1.4.2.tgz
+    cd rubygems-1.4.2
+    sudo ruby setup.rb
+    cd ..
+}
+
 case "$SERVER_TYPE" in
     torquebox)
         # Install necessary RPMs
@@ -56,52 +102,37 @@ case "$SERVER_TYPE" in
         echo "Please log out and back in to finish the installation"
         ;;
     trinidad)
-        # Install necessary RPMs
-        sudo yum install -y java-1.6.0-openjdk wget
-        # Install JRuby
-        wget http://jruby.org.s3.amazonaws.com/downloads/1.5.6/jruby-bin-1.5.6.tar.gz
-        tar xf jruby-bin-1.5.6.tar.gz
-        echo "export JRUBY_HOME=/mnt/data/jruby-1.5.6" >> ~/.bash_profile
-        echo "export PATH=\$JRUBY_HOME/bin:\$PATH" >> ~/.bash_profile
-        source ~/.bash_profile
-        jruby -S gem install jruby-openssl
-        # Install Trinidad
+        install_jruby
         jruby -S gem install trinidad
         echo "Please log out and back in to finish the installation"
         ;;
     glassfish)
-        # Install necessary RPMs
-        sudo yum install -y java-1.6.0-openjdk wget
-        # Install JRuby
-        wget http://jruby.org.s3.amazonaws.com/downloads/1.5.6/jruby-bin-1.5.6.tar.gz
-        tar xf jruby-bin-1.5.6.tar.gz
-        echo "export JRUBY_HOME=/mnt/data/jruby-1.5.6" >> ~/.bash_profile
-        echo "export PATH=\$JRUBY_HOME/bin:\$PATH" >> ~/.bash_profile
-        source ~/.bash_profile
-        jruby -S gem install jruby-openssl
-        # Install GlassFish
+        install_jruby
         jruby -S gem install glassfish
         echo "Please log out and back in to finish the installation"
         ;;
     passenger)
-        # Install necessary RPMs
-        sudo yum install -y ruby ruby-devel rubygems make gcc gcc-c++ \
-            curl-devel openssl-devel zlib-devel
-        # Install passenger
+        install_ruby
         sudo gem install passenger
         ;;
+    passenger_ree)
+        install_ruby
+        install_ree
+        sudo gem install passenger
+        echo "Please log out and back in to finish the installation"
+        ;;
     unicorn)
-        # Install necessary RPMs
-        sudo yum install -y ruby ruby-devel rubygems make gcc gcc-c++ \
-            curl-devel openssl-devel zlib-devel
-        # Install unicorn
+        install_ruby
         sudo gem install unicorn rake
         ;;
+    unicorn_ree)
+        install_ruby
+        install_ree
+        sudo gem install unicorn rake
+        echo "Please log out and back in to finish the installation"
+        ;;
     thin)
-        # Install necessary RPMs
-        sudo yum install -y ruby ruby-devel rubygems make gcc gcc-c++ \
-            curl-devel openssl-devel zlib-devel
-        # Install thin
+        install_ruby
         sudo gem install thin
         ;;
 esac
