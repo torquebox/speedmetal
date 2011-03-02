@@ -133,7 +133,7 @@ case "$SERVER_TYPE" in
         ;;
     thin)
         install_ruby
-        sudo gem install thin
+        sudo gem install thin rake
         ;;
 esac
 
