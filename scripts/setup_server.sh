@@ -48,7 +48,7 @@ case "$SERVER_TYPE" in
         source ~/.bash_profile
         jruby -S gem install jruby-openssl
         # Increase default heap size
-        sed -i 's/512m/1024m/' $JBOSS_HOME/bin/run.conf
+        sed -i 's/512m/2048m/' $JBOSS_HOME/bin/run.conf
         # Increase open file limit
         echo "ec2-user hard nofile 4096" | sudo tee -a /etc/security/limits.conf
         echo "ec2-user shoft nofile 4096" | sudo tee -a /etc/security/limits.conf
@@ -95,7 +95,7 @@ case "$SERVER_TYPE" in
         sudo yum install -y ruby ruby-devel rubygems make gcc gcc-c++ \
             curl-devel openssl-devel zlib-devel
         # Install unicorn
-        sudo gem install unicorn
+        sudo gem install unicorn rake
         ;;
     thin)
         # Install necessary RPMs
