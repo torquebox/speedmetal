@@ -8,7 +8,7 @@ Install prerequisite gems
 
 Migrate database and load default data
 
-    cd speedmetal/apps/rails2/redmine-1.1.1
+    cd /mnt/data/speedmetal/apps/rails2/redmine-1.1.1
     RAILS_ENV=production jruby -S rake db:migrate
     RAILS_ENV=production jruby -S rake redmine:load_default_data
 
@@ -31,24 +31,76 @@ Start TorqueBox
     $JBOSS_HOME/bin/run.sh -b 0.0.0.0
 
 
+
+# Trinidad Setup
+
+Install prerequisite gems
+
+    jruby -S gem install -v=0.4.2 i18n
+    jruby -S gem install -v=1.0.1 rack
+    jruby -S gem install -v=0.9.7 activerecord-jdbcmysql-adapter
+
+Migrate database and load default data
+
+    cd /mnt/data/speedmetal/apps/rails2/redmine-1.1.1
+    RAILS_ENV=production jruby -S rake db:migrate
+    RAILS_ENV=production jruby -S rake redmine:load_default_data
+
+When prompted for a language select the default of en.
+
+Start Trinidad
+
+    JAVA_OPTS="-Xmx2048m" jruby -S trinidad -p 8080 -e production -t
+
+
+
 # Passenger Setup
 
 Install prerequisite gems
 
     sudo gem install -v=0.4.2 i18n
     sudo gem install -v=1.0.1 rack
-    sudo yum install mysql-libs mysql-devel
+    sudo yum install -y mysql-libs mysql-devel
     sudo gem install mysql
 
 Migrate database and load default data
 
-    cd speedmetal/apps/rails2/redmine-1.1.1
+    cd /mnt/data/speedmetal/apps/rails2/redmine-1.1.1
     RAILS_ENV=production rake db:migrate
     RAILS_ENV=production rake redmine:load_default_data
 
 Start Passenger
 
-    passenger start -p 8080 -e production
+    passenger start -p 8080 -e production --max-pool-size 10
+
+
+# Unicorn Setup
+
+Install prerequisite gems
+
+    sudo gem install -v=0.4.2 i18n
+    sudo gem install -v=1.0.1 rack
+    sudo yum install -y mysql-libs mysql-devel
+    sudo gem install mysql
+
+Migrate database and load default data
+
+    cd /mnt/data/speedmetal/apps/rails2/redmine-1.1.1
+    RAILS_ENV=production rake db:migrate
+    RAILS_ENV=production rake redmine:load_default_data
+
+Write config file
+
+    cat << EOF > /tmp/unicorn.rb
+    worker_processes 10
+    preload_app true
+    timeout 30
+    listen 8080, :backlog => 2048
+    EOF
+
+Start Unicorn
+
+    unicorn_rails -E production -c /tmp/unicorn.rb
 
 
 
