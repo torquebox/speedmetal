@@ -52,7 +52,7 @@ install_jruby() {
 }
 
 install_ree() {
-    sudo yum install -y patch
+    sudo yum install -y patch wget
     wget http://rubyenterpriseedition.googlecode.com/files/ruby-enterprise-1.8.7-2011.03.tar.gz
     tar xzf ruby-enterprise-1.8.7-2011.03.tar.gz
     PREFIX=/mnt/data/ree
