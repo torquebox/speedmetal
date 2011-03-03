@@ -26,6 +26,7 @@ Create a deployment descriptor
 
 Start TorqueBox
 
+    screen
     $JBOSS_HOME/bin/run.sh -b 0.0.0.0
 
 
@@ -46,6 +47,7 @@ Migrate database and load default data
 
 Start Trinidad
 
+    screen
     JAVA_OPTS="-Xmx2048m" jruby -S trinidad -p 8080 -e production -t
 
 
@@ -89,6 +91,7 @@ Migrate database and load default data
 
 Start Passenger
 
+    screen
     passenger start -p 8080 -e production --max-pool-size 10
 
 
@@ -170,4 +173,5 @@ Then verify you can ssh into the server without a password
 
 Finally, kick off the benchmark
 
+    screen
     tsung -f /home/ec2-user/speedmetal/apps/rails2/redmine-1.1.1/tsung.xml start
