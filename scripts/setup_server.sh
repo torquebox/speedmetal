@@ -25,7 +25,7 @@ sudo chmod 777 /mnt/data
 cd /mnt/data
 
 # Install necessary RPMs
-sudo yum install -y erlang git
+sudo yum install -y erlang git screen
 
 # Clone SpeedMetal
 git clone git://github.com/torquebox/speedmetal.git
