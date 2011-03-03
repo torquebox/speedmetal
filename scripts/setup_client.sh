@@ -18,7 +18,7 @@ SERVER_IP=$1
 cd ~
 
 # Install necessary RPMs
-sudo yum install -y erlang wget make git perl-Template-Toolkit gnuplot
+sudo yum install -y erlang wget make git perl-Template-Toolkit gnuplot screen
 
 # Clone SpeedMetal
 git clone git://github.com/torquebox/speedmetal.git
