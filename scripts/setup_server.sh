@@ -94,7 +94,8 @@ case "$SERVER_TYPE" in
         source ~/.bash_profile
         jruby -S gem install jruby-openssl
         # Increase default heap size
-        sed -i 's/512m/2048m/' $JBOSS_HOME/bin/run.conf
+        sed -i 's/-Xmx1024m/-Xmx2048m/' $JBOSS_HOME/bin/run.conf
+        sed -i 's/-Xms128m/-Xms2048m/' $JBOSS_HOME/bin/run.conf
         # Increase open file limit
         echo "ec2-user hard nofile 4096" | sudo tee -a /etc/security/limits.conf
         echo "ec2-user shoft nofile 4096" | sudo tee -a /etc/security/limits.conf
