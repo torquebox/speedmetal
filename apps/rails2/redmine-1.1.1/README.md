@@ -92,7 +92,7 @@ Migrate database and load default data
 Start Passenger
 
     screen
-    passenger start -p 8080 -e production --max-pool-size 10
+    passenger start -p 8080 -e production --max-pool-size 18
 
 
 
@@ -167,9 +167,11 @@ From Tsung machine, test app is running via curl
 
     curl http://server:8080/
 
-Then verify you can ssh into the server without a password
+Then verify you can ssh into the server and localhost without a
+password
 
     ssh server
+    ssh localhost
 
 Finally, kick off the benchmark
 
