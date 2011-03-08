@@ -105,6 +105,10 @@ case "$SERVER_TYPE" in
     trinidad)
         install_jruby
         jruby -S gem install trinidad
+        # Increase open file limit
+        echo "ec2-user hard nofile 4096" | sudo tee -a /etc/security/limits.conf
+        echo "ec2-user shoft nofile 4096" | sudo tee -a /etc/security/limits.conf
+        echo "ulimit -n 4096" >> ~/.bash_profile
         echo "Please log out and back in to finish the installation"
         ;;
     glassfish)
