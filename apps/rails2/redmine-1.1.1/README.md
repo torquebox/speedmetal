@@ -78,9 +78,17 @@ Migrate database and load default data
     RAILS_ENV=production jruby -S rake db:migrate
     RAILS_ENV=production REDMINE_LANG=en jruby -S rake redmine:load_default_data
 
+Create GlassFish config file
+
+    gfrake config
+    sed -i 's/port: 3000/port: 8080/' config/glassfish.yml
+    sed -i 's/environment: development/environment: production/' config/glassfish.yml
+    sed -i 's/max-thread-pool-size: 5/max-thread-pool-size: 100/' config/glassfish.yml
+    
+
 Start GlassFish
 
-    JAVA_OPTS="-Xmx2048m" jruby -S glassfish -p 8080 -e production
+    JAVA_OPTS="-Xmx2048m" jruby -S glassfish --config config/glassfish.yml
 
 
 
