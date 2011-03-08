@@ -24,6 +24,9 @@ Create a deployment descriptor
       context: /
     EOF
 
+Edit $JBOSS_HOME/server/default/deploy/jbossweb.sar/server.xml and add
+`maxThreads="100"` to the port 8080 HTTP connector element.
+
 Start TorqueBox
 
     screen
@@ -45,10 +48,18 @@ Migrate database and load default data
     RAILS_ENV=production jruby -S rake db:migrate
     RAILS_ENV=production REDMINE_LANG=en jruby -S rake redmine:load_default_data
 
+## Write Trinidad Config File
+
+    cat << EOF > /tmp/trinidad.yml
+    ---
+    http:
+      maxThreads: 100
+    EOF
+
 Start Trinidad
 
     screen
-    JAVA_OPTS="-Xmx2048m" jruby -S trinidad -p 8080 -e production -t
+    JAVA_OPTS="-Xmx2048m" jruby -S trinidad -p 8080 -e production -t --config /tmp/trinidad.yml
 
 
 
@@ -115,7 +126,7 @@ Migrate database and load default data
 Write config file
 
     cat << EOF > /tmp/unicorn.rb
-    worker_processes 10
+    worker_processes 18
     preload_app true
     timeout 30
     listen 8080, :backlog => 2048
