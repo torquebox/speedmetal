@@ -48,7 +48,7 @@ Login to the instance then run the setup_client.sh script.
 
 ## Launch Server Instance
 
-Launch instance of 'ami-e291668b' with size m1.large in the same
+Launch instance of 'ami-e291668b' with size c1.xlarge in the same
 availability zone and security group as the Tsung instance.
 
 Login to the instance then run the setup_server.sh script.
