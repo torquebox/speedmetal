@@ -1,0 +1,184 @@
+<?xml version="1.0"?><tsung loglevel="notice" version="1.0" dumptraffic="false">
+  <clients>
+    <client host="localhost" cpu="2"/>
+  </clients>
+  
+  <servers>
+    <server host="server" port="8080" type="tcp"/>
+  </servers>
+
+  <monitoring>
+    <monitor host="server" type="erlang"/>
+  </monitoring>
+
+  <load>
+    <user session="ensureproject" start_time="0" unit="second"/>
+
+    <arrivalphase phase="1" duration="2" unit="minute">
+      <users arrivalrate="1" unit="second"/>
+    </arrivalphase>
+
+    <arrivalphase phase="2" duration="2" unit="minute">
+      <users arrivalrate="2" unit="second"/>
+    </arrivalphase>
+
+    <arrivalphase phase="3" duration="2" unit="minute">
+      <users arrivalrate="3" unit="second"/>
+    </arrivalphase>
+
+    <arrivalphase phase="4" duration="2" unit="minute">
+      <users arrivalrate="4" unit="second"/>
+    </arrivalphase>
+
+    <arrivalphase phase="5" duration="2" unit="minute">
+      <users arrivalrate="5" unit="second"/>
+    </arrivalphase>
+
+    <arrivalphase phase="6" duration="5" unit="minute">
+      <users arrivalrate="7" unit="second"/>
+    </arrivalphase>
+
+    <arrivalphase phase="7" duration="5" unit="minute">
+      <users arrivalrate="10" unit="second"/>
+    </arrivalphase>
+
+    <arrivalphase phase="8" duration="60" unit="minute">
+      <users arrivalrate="20" unit="second"/>
+    </arrivalphase>
+  </load>
+
+  <sessions>
+
+    <session name="ensureproject" probability="0" type="ts_http">
+      <request>
+        <http url="/" version="1.1" method="GET"/>
+      </request>
+
+      <request>
+        <dyn_variable name="authenticity_token"/>
+        <http url="/login" version="1.1" method="GET"/>
+      </request>
+
+      <setdynvars sourcetype="eval" code="fun({Pid,DynVars})->                                             {ok, Val} = ts_dynvars:lookup(authenticity_token, DynVars),                                             edoc_lib:escape_uri(Val)                                           end.">
+        <var name="escaped_authenticity_token"/>
+      </setdynvars>
+
+      <request subst="true">
+        <http url="/login" version="1.1" method="POST" contents="username=admin&amp;password=admin&amp;authenticity_token=%%_escaped_authenticity_token%%"/>
+      </request>
+
+      <request>
+        <http url="/projects" version="1.1" method="GET"/>
+      </request>
+
+      <request>
+        <dyn_variable name="authenticity_token"/>
+        <http url="/projects/new" version="1.1" method="GET"/>
+      </request>
+
+      <setdynvars sourcetype="eval" code="fun({Pid,DynVars})->                                             {ok, Val} = ts_dynvars:lookup(authenticity_token, DynVars),                                             edoc_lib:escape_uri(Val)                                           end.">
+        <var name="escaped_authenticity_token"/>
+      </setdynvars>
+
+      <setdynvars sourcetype="eval" code="fun({Pid, DynVars}) -> &quot;testproject&quot; end.">
+        <var name="project_id"/>
+      </setdynvars>
+
+      <request subst="true">
+        <http url="/projects" version="1.1" method="POST" contents="project[name]=%%_project_id%%&amp;project[identifier]=%%_project_id%%&amp;project[is_public]=1&amp;project[enabled_module_names][]=issue_tracking&amp;project[enabled_module_names][]=time_tracking&amp;project[enabled_module_names][]=news&amp;authenticity_token=%%_escaped_authenticity_token%%"/>
+      </request>
+
+    </session>
+
+    <session name="browse_site" probability="80" type="ts_http">
+      <setdynvars sourcetype="eval" code="fun({Pid, DynVars}) -> &quot;testproject&quot; end.">
+        <var name="project_id"/>
+      </setdynvars>
+
+      <thinktime value="10"/>
+
+      <request>
+        <http url="/" version="1.1" method="GET"/>
+      </request>
+
+      <thinktime random="true" value="5"/>
+
+      <request subst="true">
+        <http url="/projects/%%_project_id%%" version="1.1" method="GET"/>
+      </request>
+
+      <thinktime random="true" value="5"/>
+
+      <request subst="true">
+        <http url="/projects/%%_project_id%%/issues" version="1.1" method="GET"/>
+      </request>
+
+      <thinktime random="true" value="5"/>
+
+      <request subst="true">
+        <http url="/projects/%%_project_id%%/news" version="1.1" method="GET"/>
+      </request>
+    </session>
+
+    <session name="create_issue" probability="20" type="ts_http">
+      <setdynvars sourcetype="eval" code="fun({Pid, DynVars}) -> &quot;testproject&quot; end.">
+        <var name="project_id"/>
+      </setdynvars>
+
+      <thinktime value="10"/>
+
+      <request>
+        <http url="/" version="1.1" method="GET"/>
+      </request>
+
+      <thinktime random="true" value="5"/>
+
+      <request>
+        <dyn_variable name="authenticity_token"/>
+        <http url="/login" version="1.1" method="GET"/>
+      </request>
+
+      <setdynvars sourcetype="eval" code="fun({Pid,DynVars})->                                             {ok, Val} = ts_dynvars:lookup(authenticity_token, DynVars),                                             edoc_lib:escape_uri(Val)                                           end.">
+        <var name="escaped_authenticity_token"/>
+      </setdynvars>
+
+      <thinktime random="true" value="5"/>
+
+      <request subst="true">
+        <http url="/login" version="1.1" method="POST" contents="username=admin&amp;password=admin&amp;authenticity_token=%%_escaped_authenticity_token%%"/>
+      </request>
+
+      <thinktime random="true" value="5"/>
+
+      <request subst="true">
+        <http url="/projects/%%_project_id%%" version="1.1" method="GET"/>
+      </request>
+
+      <thinktime random="true" value="5"/>
+
+      <request subst="true">
+        <dyn_variable name="authenticity_token"/>
+        <http url="/projects/%%_project_id%%/issues/new" version="1.1" method="GET"/>
+      </request>
+
+      <setdynvars sourcetype="eval" code="fun({Pid,DynVars})->                                             {ok, Val} = ts_dynvars:lookup(authenticity_token, DynVars),                                             edoc_lib:escape_uri(Val)                                           end.">
+        <var name="escaped_authenticity_token"/>
+      </setdynvars>
+
+      <thinktime random="true" value="15"/>
+
+      <setdynvars sourcetype="random_string" length="15">
+        <var name="issue_subject"/>
+      </setdynvars>
+
+      <setdynvars sourcetype="random_string" length="150">
+        <var name="issue_description"/>
+      </setdynvars>
+
+      <request subst="true">
+        <http url="/projects/%%_project_id%%/issues/create" version="1.1" method="POST" contents="issue[tracker_id]=1&amp;issue[subject]=%%_issue_subject%%&amp;issue[description]=%%_issue_description%%&amp;issue[status_id]=1&amp;issue[priority_id]=4&amp;commit=Create&amp;authenticity_token=%%_escaped_authenticity_token%%"/>
+      </request>
+    </session>
+
+  </sessions>
+</tsung>
