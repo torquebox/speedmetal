@@ -82,3 +82,15 @@ unicorn_ree/20110308-22:01
 * worker_processes 18
 * timeout 30
 * backlog 2048
+
+passenger/20110309-13:19
+* max-pool-size 18
+
+unicorn/20110309-13:19
+* worker_processes 18
+* timeout 30
+* backlog 2048
+* clients backed up significantly but test finished
+
+thin/20110309-13:19
+* tsung client ran out of sockets after about 65 minutes
