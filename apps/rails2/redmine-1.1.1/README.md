@@ -59,7 +59,7 @@ Migrate database and load default data
 Start Trinidad
 
     screen
-    JAVA_OPTS="-Xmx2048m" jruby -S trinidad -p 8080 -e production -t --config /tmp/trinidad.yml
+    jruby -J-Xmx2048m -S trinidad -p 8080 -e production -t --config /tmp/trinidad.yml
 
 
 
