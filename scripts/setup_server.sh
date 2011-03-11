@@ -41,7 +41,7 @@ install_ruby() {
 
 install_jruby() {
     # Install necessary RPMs
-    sudo yum install -y java-1.6.0-openjdk wget
+    sudo yum install -y java-1.6.0-openjdk java-1.6.0-openjdk-devel wget
     # Install JRuby
     wget http://jruby.org.s3.amazonaws.com/downloads/1.5.6/jruby-bin-1.5.6.tar.gz
     tar xf jruby-bin-1.5.6.tar.gz
@@ -82,7 +82,7 @@ install_ree() {
 case "$SERVER_TYPE" in
     torquebox)
         # Install necessary RPMs
-        sudo yum install -y java-1.6.0-openjdk wget unzip
+        sudo yum install -y java-1.6.0-openjdk java-1.6.0-openjdk-devel wget unzip
         # Install latest TorqueBox dev build
         wget http://torquebox.org/torquebox-dev.zip
         unzip torquebox-dev.zip
@@ -93,7 +93,7 @@ case "$SERVER_TYPE" in
         echo "export PATH=\$JRUBY_HOME/bin:\$PATH" >> ~/.bash_profile
         source ~/.bash_profile
         jruby -S gem install jruby-openssl
-        # Increase default heap size
+        # Increase maximum heap size
         sed -i 's/-Xmx1024m/-Xmx2048m/' $JBOSS_HOME/bin/run.conf
         # Increase open file limit
         echo "ec2-user hard nofile 4096" | sudo tee -a /etc/security/limits.conf
