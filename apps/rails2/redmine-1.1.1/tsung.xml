@@ -109,7 +109,7 @@
 
     </session>
 
-    <session name='browse_site' probability='80'  type='ts_http'>
+    <session name='browse_site' probability='98'  type='ts_http'>
       <setdynvars sourcetype="eval" code='fun({Pid, DynVars}) -> "testproject" end.'>
         <var name="project_id" />
       </setdynvars>
@@ -140,7 +140,7 @@
       </request>
     </session>
 
-    <session name='create_issue' probability='20' type='ts_http'>
+    <session name='create_issue' probability='2' type='ts_http'>
       <setdynvars sourcetype="eval" code='fun({Pid, DynVars}) -> "testproject" end.'>
         <var name="project_id" />
       </setdynvars>
