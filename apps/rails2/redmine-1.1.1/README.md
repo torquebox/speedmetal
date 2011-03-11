@@ -80,15 +80,21 @@ Migrate database and load default data
 
 Create GlassFish config file
 
-    gfrake config
+    jruby -S gfrake config
     sed -i 's/port: 3000/port: 8080/' config/glassfish.yml
     sed -i 's/environment: development/environment: production/' config/glassfish.yml
     sed -i 's/max-thread-pool-size: 5/max-thread-pool-size: 100/' config/glassfish.yml
+    sed -i 's/enable: false/enable: true/' config/glassfish.yml
+    sed -i 's/#jvm-options: -server -Xmx512m/jvm-options: -server -Xmx2048m/' config/glassfish.yml
+    mkdir -p tmp/pids
+
+Increase the max thread pool size, run as a daemon, and increase
+default heap to 2GB
     
 
 Start GlassFish
 
-    JAVA_OPTS="-Xmx2048m" jruby -S glassfish --config config/glassfish.yml
+    jruby -S glassfish --config config/glassfish.yml
 
 
 
