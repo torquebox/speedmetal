@@ -45,6 +45,7 @@ trinidad/20110308-19:44
 glassfish/20110308-19:44
 * max-thread-pool-size set to 100
 * Xmx set to 2048m
+* above Xmx did not take effect, was actually 500m
 
 passenger_ree/20110308-19:44
 * max-pool-size 18
@@ -93,4 +94,36 @@ unicorn/20110309-13:19
 * clients backed up significantly but test finished
 
 thin/20110309-13:19
-* tsung client ran out of sockets after about 65 minutes
+* clients backed up so much that tsung client ran out of sockets after
+  about 65 minutes
+
+torquebox/20110311-14:23
+* maxThreads set to 100
+* Xmx2048m
+
+passenger_ree/20110311-15:17
+* max-pool-size 18
+
+unicorn_ree/20110311-16:43
+* worker_processes 18
+* timeout 30
+* backlog 2048
+* once over ~8500 tsung users got "exec request failed on channel 0"
+
+trinidad/20110311-19:30
+* Xmx set to 2048m
+* apparently all previous tests weren't actually setting Xmx to 2048m
+* maxThreads set to 100
+* once over ~4500 tsung users got "Write failed: Broken pipe"
+
+glassfish/20110312-14:13
+* Xmx set to 2048m
+* max-thread-pool-size set to 100
+
+passenger/20110312-14:13
+* max-pool-size 18
+
+unicorn/20110312-14:13
+* worker_processes 18
+* timeout 30
+* backlog 2048
