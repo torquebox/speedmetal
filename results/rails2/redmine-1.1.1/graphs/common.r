@@ -111,7 +111,7 @@ draw_graph <- function(inputs, opt) {
                    size = I(1.5),
                    xlab = "Elapsed Mins",
                    ylab = "Response Time (ms)",
-                   main = "Latency") + scale_y_log10(breaks = 4**(3:12), labels = 4**(3:12))
+                   main = "Latency (lower is better)") + scale_y_log10(breaks = 4**(3:12), labels = 4**(3:12))
 
     plot2 <- qplot(elapsed / 60, per_second,
                    data = data$X200_responses,
@@ -121,7 +121,7 @@ draw_graph <- function(inputs, opt) {
                    size = I(1.5),
                    xlab = "Elapsed Mins",
                    ylab = "Requests / sec",
-                   main = "Throughput")
+                   main = "Throughput (higher is better)")
 
     plot3 <- qplot(elapsed / 60, X10sec_mean,
                    data = data$cpu,
@@ -131,7 +131,7 @@ draw_graph <- function(inputs, opt) {
                    size = I(1.5),
                    xlab = "Elapsed Mins",
                    ylab = "CPU %",
-                   main = "CPU Usage")
+                   main = "CPU Usage (lower is better)")
 
     plot4 <- qplot(elapsed / 60, X10sec_mean,
                    data = data$mem,
@@ -141,7 +141,7 @@ draw_graph <- function(inputs, opt) {
                    size = I(1.5),
                    xlab = "Elapsed Mins",
                    ylab = "Free Memory (MB)",
-                   main = "Free Memory")
+                   main = "Free Memory (higher is better)") + scale_y_continuous(limits=c(0,7680))
 
     for(i in 2:length(inputs$dirs)) {
         data = load_data(inputs$dirs[i], inputs$tags[i])
