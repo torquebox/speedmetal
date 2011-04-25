@@ -127,3 +127,7 @@ unicorn/20110312-14:13
 * worker_processes 18
 * timeout 30
 * backlog 2048
+
+
+torquebox/20110316-13:01
+* upgraded to TB dev build w/ JRuby 1.6
