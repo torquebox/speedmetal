@@ -1,0 +1,113 @@
+<?xml version="1.0"?>
+<!DOCTYPE tsung SYSTEM "/usr/share/tsung/tsung-1.0.dtd">
+<tsung loglevel="notice" version="1.0" dumptraffic="false">
+  <!-- Client side setup -->
+  <clients>
+    <client host="localhost" cpu="2" />
+  </clients>
+  
+  <!-- Server side setup -->
+  <servers>
+    <server host="server" port="8080" type="tcp"></server>
+  </servers>
+
+  <!-- to start os monitoring (cpu, network, memory). Use an erlang
+       agent on the remote machine or SNMP. erlang is the default --> 
+  <monitoring>
+    <monitor host="server" type="erlang"></monitor>
+  </monitoring>
+
+  <load>
+    <!-- several arrival phases can be set: for each phase, you can set
+         the mean inter-arrival time between new clients and the phase
+         duration -->
+
+    <arrivalphase phase="1" duration="2" unit="minute">
+      <users arrivalrate="2" unit="second"></users>
+    </arrivalphase>
+
+    <arrivalphase phase="2" duration="2" unit="minute">
+      <users arrivalrate="4" unit="second"></users>
+    </arrivalphase>
+
+    <arrivalphase phase="3" duration="2" unit="minute">
+      <users arrivalrate="6" unit="second"></users>
+    </arrivalphase>
+
+    <arrivalphase phase="4" duration="2" unit="minute">
+      <users arrivalrate="8" unit="second"></users>
+    </arrivalphase>
+
+    <arrivalphase phase="5" duration="2" unit="minute">
+      <users arrivalrate="10" unit="second"></users>
+    </arrivalphase>
+
+    <arrivalphase phase="6" duration="10" unit="minute">
+      <users arrivalrate="15" unit="second"></users>
+    </arrivalphase>
+
+    <arrivalphase phase="7" duration="10" unit="minute">
+      <users arrivalrate="20" unit="second"></users>
+    </arrivalphase>
+
+    <arrivalphase phase="8" duration="10" unit="minute">
+      <users arrivalrate="25" unit="second"></users>
+    </arrivalphase>
+
+    <arrivalphase phase="9" duration="10" unit="minute">
+      <users arrivalrate="30" unit="second"></users>
+    </arrivalphase>
+
+    <arrivalphase phase="10" duration="10" unit="minute">
+      <users arrivalrate="35" unit="second"></users>
+    </arrivalphase>
+
+    <arrivalphase phase="11" duration="10" unit="minute">
+      <users arrivalrate="40" unit="second"></users>
+    </arrivalphase>
+
+    <arrivalphase phase="12" duration="10" unit="minute">
+      <users arrivalrate="45" unit="second"></users>
+    </arrivalphase>
+  </load>
+
+  <sessions>
+
+    <session name="kind_like" probability="33" type="ts_http">
+      <request>
+        <http url="/" version="1.1" method="GET"></http>
+      </request>
+
+      <thinktime random='true' value='2'/>
+
+      <request>
+        <http url="/kind/like" version="1.1" method="GET"></http>
+      </request>
+    </session>
+
+    <session name="kind_cold" probability="33" type="ts_http">
+      <request>
+        <http url="/" version="1.1" method="GET"></http>
+      </request>
+
+      <thinktime random='true' value='2'/>
+
+      <request>
+        <http url="/kind/cold" version="1.1" method="GET"></http>
+      </request>
+    </session>
+
+    <session name="kind_drink" probability="34" type="ts_http">
+      <request>
+        <http url="/" version="1.1" method="GET"></http>
+      </request>
+
+      <thinktime random='true' value='2'/>
+
+      <request>
+        <http url="/kind/drink" version="1.1" method="GET"></http>
+      </request>
+    </session>
+
+  </sessions>
+</tsung>
