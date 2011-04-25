@@ -34,3 +34,20 @@ Edit $JBOSS_HOME/server/default/deploy/jbossweb.sar/server.xml and add
 
     screen
     $JBOSS_HOME/bin/run.sh -b 0.0.0.0
+
+# Run Benchmark
+
+From Tsung machine, test app is running via curl
+
+    curl http://server:8080/
+
+Then verify you can ssh into the server and localhost without a
+password
+
+    ssh server
+    ssh localhost
+
+Finally, kick off the benchmark
+
+    screen
+    tsung -f /home/ec2-user/speedmetal/apps/rails3/beer_tweets/tsung.xml start
