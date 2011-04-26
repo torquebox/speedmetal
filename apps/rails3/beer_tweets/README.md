@@ -1,7 +1,8 @@
 # Check Out Beer Tweets
 
     cd /mnt/data/speedmetal/apps/rails3/beer_tweets
-    git clone git://github.com/bbrowning/beer_tweets.git .
+    git clone git://github.com/bbrowning/beer_tweets.git app
+    cd app
 
 # Install Gems
 
@@ -19,7 +20,7 @@
     cat << EOF > $TORQUEBOX_HOME/apps/beer_tweets-knob.yml
     ---
     application:
-      root: /mnt/data/speedmetal/apps/rails3/beer_tweets
+      root: /mnt/data/speedmetal/apps/rails3/beer_tweets/app
       env: production
     web:
       context: /
