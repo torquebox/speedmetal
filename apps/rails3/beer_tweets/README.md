@@ -28,7 +28,7 @@
 # Set Max Threads
 
 Edit $JBOSS_HOME/server/default/deploy/jbossweb.sar/server.xml and add
-`maxThreads="100"` to the port 8080 HTTP connector element.
+`maxThreads="500"` to the port 8080 HTTP connector element.
 
 # Start TorqueBox
 
