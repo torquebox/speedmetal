@@ -84,9 +84,9 @@ case "$SERVER_TYPE" in
         # Install necessary RPMs
         sudo yum install -y java-1.6.0-openjdk java-1.6.0-openjdk-devel wget unzip
         # Install latest TorqueBox dev build
-        wget http://repository-torquebox.forge.cloudbees.com/release/org/torquebox/torquebox-dist/1.0.0.CR1/torquebox-dist-1.0.0.CR1-bin.zip
-        unzip torquebox-dist-1.0.0.CR1-bin.zip
-        ln -s torquebox-1.0.0.CR1/ torquebox-current
+        wget http://repository-torquebox.forge.cloudbees.com/release/org/torquebox/torquebox-dist/1.0.0.CR2/torquebox-dist-1.0.0.CR2-bin.zip
+        unzip torquebox-dist-1.0.0.CR2-bin.zip
+        ln -s torquebox-1.0.0.CR2/ torquebox-current
         echo "export TORQUEBOX_HOME=/mnt/data/torquebox-current" >> ~/.bash_profile
         echo "export JBOSS_HOME=\$TORQUEBOX_HOME/jboss" >> ~/.bash_profile
         echo "export JRUBY_HOME=\$TORQUEBOX_HOME/jruby" >> ~/.bash_profile
