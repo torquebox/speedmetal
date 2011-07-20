@@ -15,8 +15,8 @@ Migrate database and load default data
 
 Create a deployment descriptor
 
-    rm -f $JBOSS_HOME/server/default/deploy/*-knob.yml
-    cat << EOF > $JBOSS_HOME/server/default/deploy/redmine-knob.yml
+    rm -f $JBOSS_HOME/standalone/deployments/*-knob.yml
+    cat << EOF > $JBOSS_HOME/standalone/deployments/redmine-knob.yml
     ---
     application:
       root: /mnt/data/speedmetal/apps/rails2/redmine-1.1.1/
@@ -31,7 +31,7 @@ Edit $JBOSS_HOME/server/default/deploy/jbossweb.sar/server.xml and add
 Start TorqueBox
 
     screen
-    $JBOSS_HOME/bin/run.sh -b 0.0.0.0
+    $JBOSS_HOME/bin/standalone.sh -b 0.0.0.0
 
 
 

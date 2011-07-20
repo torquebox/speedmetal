@@ -8,7 +8,7 @@ set -o pipefail
 usage() {
     echo "Usage: `basename $0` server_type rds_instance_ip_address"
     echo "       server_type is one of torquebox, trinidad, glassfish, unicorn,"
-    echo "                             passenger, or thin"
+    echo "                             unicorn_ree, passenger, passenger_ree or thin"
     echo "       rds_instance_ip_address is the IP address of the Amazon RDS instance"
     exit 1
 }
@@ -84,9 +84,9 @@ case "$SERVER_TYPE" in
         # Install necessary RPMs
         sudo yum install -y java-1.6.0-openjdk java-1.6.0-openjdk-devel wget unzip
         # Install latest TorqueBox dev build
-        wget http://repository-torquebox.forge.cloudbees.com/release/org/torquebox/torquebox-dist/1.0.0.CR2/torquebox-dist-1.0.0.CR2-bin.zip
-        unzip torquebox-dist-1.0.0.CR2-bin.zip
-        ln -s torquebox-1.0.0.CR2/ torquebox-current
+        wget http://torquebox.org/2x/builds/LATEST/torquebox-dist-bin.zip
+        unzip torquebox-dist-bin.zip
+        ln -s torquebox-2*/ torquebox-current
         echo "export TORQUEBOX_HOME=/mnt/data/torquebox-current" >> ~/.bash_profile
         echo "export JBOSS_HOME=\$TORQUEBOX_HOME/jboss" >> ~/.bash_profile
         echo "export JRUBY_HOME=\$TORQUEBOX_HOME/jruby" >> ~/.bash_profile
@@ -94,7 +94,7 @@ case "$SERVER_TYPE" in
         source ~/.bash_profile
         jruby -S gem install jruby-openssl
         # Increase maximum heap size
-        sed -i 's/-Xmx1024m/-Xmx2048m/' $JBOSS_HOME/bin/run.conf
+        sed -i 's/-Xmx512m/-Xmx2048m/' $JBOSS_HOME/bin/standalone.conf
         # Increase open file limit
         echo "ec2-user hard nofile 4096" | sudo tee -a /etc/security/limits.conf
         echo "ec2-user shoft nofile 4096" | sudo tee -a /etc/security/limits.conf
