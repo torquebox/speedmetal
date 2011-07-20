@@ -41,7 +41,7 @@ on my Mac, I had to
 
 Login to the instance then run the setup_client.sh script.
 
-    curl -o setup_client.sh https://github.com/torquebox/speedmetal/raw/master/scripts/setup_client.sh
+    curl -o setup_client.sh https://raw.github.com/torquebox/speedmetal/master/scripts/setup_client.sh
     chmod +x setup_client.sh
     ./setup_client.sh server_instance_ip_address
 
@@ -53,6 +53,6 @@ availability zone and security group as the Tsung instance.
 
 Login to the instance then run the setup_server.sh script.
 
-    curl -o setup_server.sh https://github.com/torquebox/speedmetal/raw/master/scripts/setup_server.sh
+    curl -o setup_server.sh https://raw.github.com/torquebox/speedmetal/master/scripts/setup_server.sh
     chmod +x setup_server.sh
     ./setup_server.sh server_type rds_instance_ip_address
