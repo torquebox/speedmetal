@@ -15,7 +15,7 @@ Migrate database and load default data
 
 Create a deployment descriptor
 
-    rm -f $JBOSS_HOME/standalone/deployments/*-knob.yml
+    rm -f $JBOSS_HOME/standalone/deployments/*-knob*
     cat << EOF > $JBOSS_HOME/standalone/deployments/redmine-knob.yml
     ---
     application:
@@ -24,14 +24,19 @@ Create a deployment descriptor
     web:
       context: /
     EOF
+    touch $JBOSS_HOME/standalone/deployments/redmine-knob.yml.dodeploy
 
-Edit $JBOSS_HOME/server/default/deploy/jbossweb.sar/server.xml and add
-`maxThreads="100"` to the port 8080 HTTP connector element.
+Edit $JBOSS_HOME/standalone/configuration/standalone.xml and change
+"<inet-address value='127.0.0.1'/>" to "<any-ipv4-address/>" for the
+public interface.
+
+Edit $JBOSS_HOME/standalone/configuration/standalone.xml and add max-connections='100' to 
+<connector name='http' scheme='http' protocol='HTTP/1.1' socket-binding='http'/>
 
 Start TorqueBox
 
     screen
-    $JBOSS_HOME/bin/standalone.sh -b 0.0.0.0
+    $JBOSS_HOME/bin/standalone.sh
 
 
 
