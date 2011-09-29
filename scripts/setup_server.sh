@@ -43,9 +43,9 @@ install_jruby() {
     # Install necessary RPMs
     sudo yum install -y java-1.6.0-openjdk java-1.6.0-openjdk-devel wget
     # Install JRuby
-    wget http://jruby.org.s3.amazonaws.com/downloads/1.5.6/jruby-bin-1.5.6.tar.gz
-    tar xf jruby-bin-1.5.6.tar.gz
-    echo "export JRUBY_HOME=/mnt/data/jruby-1.5.6" >> ~/.bash_profile
+    wget http://jruby.org.s3.amazonaws.com/downloads/1.6.4/jruby-bin-1.6.4.tar.gz
+    tar xf jruby-bin-1.6.4.tar.gz
+    echo "export JRUBY_HOME=/mnt/data/jruby-1.6.4" >> ~/.bash_profile
     echo "export PATH=\$JRUBY_HOME/bin:\$PATH" >> ~/.bash_profile
     source ~/.bash_profile
     jruby -S gem install jruby-openssl
