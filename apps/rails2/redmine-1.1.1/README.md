@@ -30,8 +30,14 @@ Edit $JBOSS_HOME/standalone/configuration/standalone.xml and change
 "<inet-address value='127.0.0.1'/>" to "<any-ipv4-address/>" for the
 public interface.
 
-Edit $JBOSS_HOME/standalone/configuration/standalone.xml and add max-connections='100' to 
-<connector name='http' scheme='http' protocol='HTTP/1.1' socket-binding='http'/>
+Edit $JBOSS_HOME/standalone/configuration/standalone.xml and add a
+property to control the maximum number of HTTP threads:
+
+    </extensions>
+    <system-properties>
+        <property name='org.torquebox.web.http.maxThreads' value='100'/>
+    </system-properties>
+    <management>
 
 Start TorqueBox
 
