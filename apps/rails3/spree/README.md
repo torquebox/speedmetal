@@ -2,12 +2,17 @@
 
 Install ImageMagick
 
+    sudo yum install ImageMagick
+
 # TorqueBox Setup
 
 Install prerequisite gems
 
     cd /mnt/data/speedmetal/apps/rails3/spree
     jruby -S bundle install
+
+Remove bogus sample data - delete position: keys from
+db/sample/option_types.yml
 
 Migrate database and load default data
 
@@ -42,4 +47,4 @@ property to control the maximum number of HTTP threads:
 Start TorqueBox
 
     screen
-    $JBOSS_HOME/bin/standalone.sh
+    $JBOSS_HOME/bin/standalone.sh -Djboss.bind.address=0.0.0.0 -Dorg.torquebox.web.http.maxThreads=100
