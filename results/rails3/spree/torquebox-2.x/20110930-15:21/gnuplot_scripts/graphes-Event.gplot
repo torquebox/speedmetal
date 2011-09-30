@@ -1,0 +1,35 @@
+set style data  linespoint
+set terminal postscript color 
+set grid
+set output "images/graphes-Event-rate.ps"
+set title " rate"
+set xlabel "unit = sec "
+set ylabel "rate"
+show title
+set key left top
+plot  "data/newphase.txt" using  1:2 title "newphase"
+set output "images/graphes-Event-total.ps"
+set title " total"
+set xlabel "unit = sec "
+set ylabel "msec"
+show title
+set key left top
+plot  "data/newphase.txt" using  1:3 title "newphase"
+set size 1,1
+set style data  linespoint
+set terminal png
+set grid
+set output "images/graphes-Event-rate.png"
+set title " rate"
+set xlabel "unit = sec "
+set ylabel "rate"
+show title
+set key left top
+plot  "data/newphase.txt" using  1:2 title "newphase"
+set output "images/graphes-Event-total.png"
+set title " total"
+set xlabel "unit = sec "
+set ylabel "msec"
+show title
+set key left top
+plot  "data/newphase.txt" using  1:3 title "newphase"
