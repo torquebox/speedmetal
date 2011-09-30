@@ -38,7 +38,18 @@ Spree::Application.configure do
   # config.action_mailer.raise_delivery_errors = false
 
   # Enable threaded mode
-  config.threadsafe!
+  # config.threadsafe!
+
+  # Like config.threadsafe! but leave dependency loading enabled
+  # since JRuby makes require threadsafe and redmine wasn't written
+  # with dependency loading disabled in mind
+  if defined?(JRUBY_VERSION)
+    config.preload_frameworks = true
+    config.cache_classes = true
+    config.dependency_loading = true # normally false w/ threadsafe!
+    config.action_controller.allow_concurrency = true
+  end
+
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation can not be found)
