@@ -2,7 +2,7 @@
 
 Install ImageMagick
 
-    sudo yum install ImageMagick
+    sudo yum install -y ImageMagick
 
 # TorqueBox Setup
 
@@ -28,19 +28,6 @@ Create a deployment descriptor
     EOF
     touch $JBOSS_HOME/standalone/deployments/spree-knob.yml.dodeploy
 
-Edit $JBOSS_HOME/standalone/configuration/standalone.xml and change
-"<inet-address value='127.0.0.1'/>" to "<any-ipv4-address/>" for the
-public interface.
-
-Edit $JBOSS_HOME/standalone/configuration/standalone.xml and add a
-property to control the maximum number of HTTP threads:
-
-    </extensions>
-    <system-properties>
-        <property name='org.torquebox.web.http.maxThreads' value='100'/>
-    </system-properties>
-    <management>
-
 Start TorqueBox
 
     screen
@@ -65,3 +52,22 @@ Start Passenger
 
     screen
     passenger start -p 8080 -e production --max-pool-size 50
+
+
+
+# Run Benchmark
+
+From Tsung machine, test app is running via curl
+
+    curl http://server:8080/
+
+Then verify you can ssh into the server and localhost without a
+password
+
+    ssh server
+    ssh localhost
+
+Finally, kick off the benchmark
+
+    screen
+    tsung -f /home/ec2-user/speedmetal/apps/rails3/spree/tsung.xml start
