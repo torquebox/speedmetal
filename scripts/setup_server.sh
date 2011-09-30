@@ -79,6 +79,23 @@ install_ree() {
     cd ..
 }
 
+install_ruby19() {
+    sudo yum install -y patch wget
+    wget http://ftp.ruby-lang.org/pub/ruby/1.9/ruby-1.9.2-p290.tar.gz
+    tar xzf ruby-1.9.2-p290.tar.gz
+    PREFIX=/mnt/data/ruby19
+    cd ruby-1.9.2-p290
+    cd ..
+    ./configure --prefix=$PREFIX
+    make
+    sudo make install
+    sudo mv /usr/bin/ruby /usr/bin/ruby.old
+    sudo cp $PREFIX/bin/ruby /usr/bin/
+    echo "export PATH=$PREFIX/bin:\$PATH" >> ~/.bash_profile
+    source ~/.bash_profile
+    cd ..
+}
+
 case "$SERVER_TYPE" in
     torquebox)
         # Install necessary RPMs
@@ -122,6 +139,11 @@ case "$SERVER_TYPE" in
     passenger_ree)
         install_ruby
         install_ree
+        sudo gem install passenger
+        echo "Please log out and back in to finish the installation"
+        ;;
+    passenger_19)
+        install_ruby19
         sudo gem install passenger
         echo "Please log out and back in to finish the installation"
         ;;
