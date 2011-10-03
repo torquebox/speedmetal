@@ -157,6 +157,11 @@ case "$SERVER_TYPE" in
         sudo gem install unicorn rake
         echo "Please log out and back in to finish the installation"
         ;;
+    unicorn_19)
+        install_ruby19
+        sudo gem install unicorn rake
+        echo "Please log out and back in to finish the installation"
+        ;;
     thin)
         install_ruby
         sudo gem install thin rake
