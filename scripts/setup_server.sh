@@ -85,7 +85,6 @@ install_ruby19() {
     tar xzf ruby-1.9.2-p290.tar.gz
     PREFIX=/mnt/data/ruby19
     cd ruby-1.9.2-p290
-    cd ..
     ./configure --prefix=$PREFIX
     make
     sudo make install
