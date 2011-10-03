@@ -82,6 +82,47 @@ Start Passenger
 
 
 
+# Unicorn Setup
+
+Install prerequisite gems
+
+    sudo yum install -y mysql-libs mysql-devel sqlite-devel
+    cd /mnt/data/speedmetal/apps/rails3/spree
+    sudo gem install bundler
+    bundle install
+
+Migrate database and load default data
+
+    RAILS_ENV=production rake db:bootstrap
+
+Write config file
+
+    cat << EOF > /tmp/unicorn.rb
+    worker_processes 50
+    preload_app true
+    timeout 30
+    listen 8080, :backlog => 2048
+
+    # REE-friendly
+    if GC.respond_to?(:copy_on_write_friendly=)
+      GC.copy_on_write_friendly = true
+    end
+
+    before_fork do |server, worker|
+      ActiveRecord::Base.connection.disconnect! if defined?(ActiveRecord::Base)
+    end
+
+    after_fork do |server, worker|
+      ActiveRecord::Base.establish_connection if defined?(ActiveRecord::Base)
+    end
+    EOF
+
+Start Unicorn
+
+    unicorn_rails -E production -c /tmp/unicorn.rb
+
+
+
 # Run Benchmark
 
 From Tsung machine, test app is running via curl
