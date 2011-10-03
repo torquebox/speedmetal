@@ -10,10 +10,12 @@ source(file.path(dir0, "common.r"))
 opt = parse_params("compare_top")
 
 input_dirs <- c("torquebox-2.x/20110930-15:21/data",
+                "trinidad/20111002-13:39/data",
                 "passenger_ree/20110930-15:41/data",
                 "passenger_19/20110930-17:32/data")
 
 server_tags <- c("TorqueBox 2.x",
+                 "Trinidad",
                  "Passenger w/ REE",
                  "Passenger w/ 1.9.2")
 
