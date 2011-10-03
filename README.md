@@ -10,7 +10,7 @@ instructions from the next section.
 
 Engine: mysql  
 DB Instance Class: db.m1.large  
-DB Engine Version: default  
+DB Engine Version: 5.1.57 (default)
 Auto Minor Version Upgrade: Yes  
 Multi-AZ Deployment: No  
 

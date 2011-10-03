@@ -35,6 +35,33 @@ Start TorqueBox
 
 
 
+# Trinidad Setup
+
+Install prerequisite gems
+
+    cd /mnt/data/speedmetal/apps/rails3/spree
+    jruby -S gem install bundler
+    jruby -S bundle install
+
+Migrate database and load default data
+
+    RAILS_ENV=production jruby -S rake db:bootstrap
+
+## Write Trinidad Config File
+
+    cat << EOF > /tmp/trinidad.yml
+    ---
+    http:
+      maxThreads: 100
+    EOF
+
+Start Trinidad
+
+    screen
+    jruby -J-Xmx2048m -S trinidad -p 8080 -e production -t --config /tmp/trinidad.yml
+
+
+
 # Passenger Setup
 
 Install prerequisite gems
