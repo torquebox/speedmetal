@@ -141,7 +141,8 @@ case "$SERVER_TYPE" in
         sudo gem install passenger
         echo "Please log out and back in to finish the installation"
         ;;
-    passenger_19)
+    passenger_19
+        install_ruby)
         install_ruby19
         sudo gem install passenger
         echo "Please log out and back in to finish the installation"
@@ -157,6 +158,7 @@ case "$SERVER_TYPE" in
         echo "Please log out and back in to finish the installation"
         ;;
     unicorn_19)
+        install_ruby
         install_ruby19
         sudo gem install unicorn rake
         echo "Please log out and back in to finish the installation"
