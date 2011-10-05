@@ -12,11 +12,15 @@ opt = parse_params("compare_top")
 input_dirs <- c("torquebox-2.x/20110930-15:21/data",
                 "trinidad/20111002-13:39/data",
                 "passenger_ree/20110930-15:41/data",
-                "passenger_19/20110930-17:32/data")
+                "passenger_19/20110930-17:32/data",
+                "unicorn_ree/20111003-12:40/data",
+                "unicorn_19/20111003-12:40/data")
 
 server_tags <- c("TorqueBox 2.x",
                  "Trinidad",
                  "Passenger w/ REE",
-                 "Passenger w/ 1.9.2")
+                 "Passenger w/ 1.9.2",
+                 "Unicorn w/ REE",
+                 "Unicorn w/ 1.9.2")
 
 draw_graph(list(dirs=input_dirs, tags=server_tags), opt)
