@@ -9,7 +9,7 @@ load_benchmark <- function(Dir) {
     ## Set highest elapsed time we'll keep, allowing us to trim the graphs
     ## after a certain period so we don't graph the long-tail as request
     ## finish up after we've stopped generating load
-    max_elapsed = 4800
+    max_elapsed = 4740
 
     ## Load up request data
     request_columns = c('elapsed', 'per_second', 'X10sec_mean', 'X10sec_stdvar',
