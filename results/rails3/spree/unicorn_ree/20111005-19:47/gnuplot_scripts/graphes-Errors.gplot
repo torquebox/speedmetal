@@ -1,0 +1,35 @@
+set style data  linespoint
+set terminal postscript color 
+set grid
+set output "images/graphes-Errors-rate.ps"
+set title " rate"
+set xlabel "unit = sec "
+set ylabel "errors/sec"
+show title
+set key left top
+plot  "data/error_connect_nxdomain.txt" using  1:2 title "error_connect_nxdomain", "data/error_connect_etimedout.txt" using  1:2 title "error_connect_etimedout", "data/error_abort_max_conn_retries.txt" using  1:2 title "error_abort_max_conn_retries"
+set output "images/graphes-Errors-total.ps"
+set title " total"
+set xlabel "unit = sec "
+set ylabel "total"
+show title
+set key left top
+plot  "data/error_connect_nxdomain.txt" using  1:3 title "error_connect_nxdomain", "data/error_connect_etimedout.txt" using  1:3 title "error_connect_etimedout", "data/error_abort_max_conn_retries.txt" using  1:3 title "error_abort_max_conn_retries"
+set size 1,1
+set style data  linespoint
+set terminal png
+set grid
+set output "images/graphes-Errors-rate.png"
+set title " rate"
+set xlabel "unit = sec "
+set ylabel "errors/sec"
+show title
+set key left top
+plot  "data/error_connect_nxdomain.txt" using  1:2 title "error_connect_nxdomain", "data/error_connect_etimedout.txt" using  1:2 title "error_connect_etimedout", "data/error_abort_max_conn_retries.txt" using  1:2 title "error_abort_max_conn_retries"
+set output "images/graphes-Errors-total.png"
+set title " total"
+set xlabel "unit = sec "
+set ylabel "total"
+show title
+set key left top
+plot  "data/error_connect_nxdomain.txt" using  1:3 title "error_connect_nxdomain", "data/error_connect_etimedout.txt" using  1:3 title "error_connect_etimedout", "data/error_abort_max_conn_retries.txt" using  1:3 title "error_abort_max_conn_retries"
