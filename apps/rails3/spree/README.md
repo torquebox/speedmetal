@@ -1,9 +1,3 @@
-# Common Setup
-
-Install ImageMagick
-
-    sudo yum install -y ImageMagick
-
 # TorqueBox Setup
 
 Install prerequisite gems
@@ -13,7 +7,10 @@ Install prerequisite gems
 
 Migrate database and load default data
 
+    sudo yum install -y ImageMagick
     RAILS_ENV=production jruby -S rake db:bootstrap
+
+When prompted to load sample data during db:bootstrap, choose yes.
 
 Create a deployment descriptor
 
@@ -44,12 +41,15 @@ Install prerequisite gems
 
 Migrate database and load default data
 
+    sudo yum install -y ImageMagick
     RAILS_ENV=production jruby -S rake db:bootstrap
+
+When prompted to load sample data during db:bootstrap, choose yes.
 
 Create a deployment descriptor
 
-    rm -f $JBOSS_HOME/standalone/deployments/*-knob.yml
-    cat << EOF > $JBOSS_HOME/standalone/deployments/spree-knob.yml
+    rm -f $JBOSS_HOME/server/default/deploy/*-knob.yml
+    cat << EOF > $JBOSS_HOME/server/default/deploy/spree-knob.yml
     ---
     application:
       root: /mnt/data/speedmetal/apps/rails3/spree/
@@ -78,7 +78,10 @@ Install prerequisite gems
 
 Migrate database and load default data
 
+    sudo yum install -y ImageMagick
     RAILS_ENV=production jruby -S rake db:bootstrap
+
+When prompted to load sample data during db:bootstrap, choose yes.
 
 ## Write Trinidad Config File
 
@@ -106,7 +109,10 @@ Install prerequisite gems
 
 Migrate database and load default data
 
+    sudo yum install -y ImageMagick
     RAILS_ENV=production rake db:bootstrap
+
+When prompted to load sample data during db:bootstrap, choose yes.
 
 Start Passenger
 
@@ -126,7 +132,10 @@ Install prerequisite gems
 
 Migrate database and load default data
 
+    sudo yum install -y ImageMagick
     RAILS_ENV=production rake db:bootstrap
+
+When prompted to load sample data during db:bootstrap, choose yes.
 
 Write config file
 
