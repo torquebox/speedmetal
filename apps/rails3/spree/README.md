@@ -128,6 +128,7 @@ Install prerequisite gems
     sudo yum install -y mysql-libs mysql-devel sqlite-devel
     cd /mnt/data/speedmetal/apps/rails3/spree
     sudo gem install bundler
+    sudo gem uninstall rack -v=1.3.4
     bundle install
 
 Migrate database and load default data
