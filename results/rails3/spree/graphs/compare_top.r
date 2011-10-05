@@ -10,7 +10,7 @@ source(file.path(dir0, "common.r"))
 opt = parse_params("compare_top")
 
 input_dirs <- c("torquebox-2.x/20110930-15:21/data",
-                "trinidad/20111002-13:39/data",
+                "trinidad/20111005-16:59/data",
                 "passenger_ree/20110930-15:41/data",
                 "passenger_19/20110930-17:32/data",
                 "unicorn_ree/20111003-12:40/data",
