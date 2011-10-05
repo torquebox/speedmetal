@@ -35,6 +35,39 @@ Start TorqueBox
 
 
 
+# TorqueBox 1.x Setup
+
+Install prerequisite gems
+
+    cd /mnt/data/speedmetal/apps/rails3/spree
+    jruby -S bundle install
+
+Migrate database and load default data
+
+    RAILS_ENV=production jruby -S rake db:bootstrap
+
+Create a deployment descriptor
+
+    rm -f $JBOSS_HOME/standalone/deployments/*-knob.yml
+    cat << EOF > $JBOSS_HOME/standalone/deployments/spree-knob.yml
+    ---
+    application:
+      root: /mnt/data/speedmetal/apps/rails3/spree/
+      env: production
+    web:
+      context: /
+    EOF
+
+Edit $JBOSS_HOME/server/default/deploy/jbossweb.sar/server.xml and add
+maxThreads="100" to the port 8080 HTTP connector element.
+
+Start TorqueBox
+
+    screen
+    $JBOSS_HOME/bin/run.sh -b 0.0.0.0
+
+
+
 # Trinidad Setup
 
 Install prerequisite gems
@@ -119,6 +152,7 @@ Write config file
 
 Start Unicorn
 
+    screen
     unicorn_rails -E production -c /tmp/unicorn.rb
 
 
