@@ -35,6 +35,16 @@ git clone git://github.com/torquebox/speedmetal.git
 echo "$RDS_IP database" | sudo tee -a /etc/hosts
 
 
+install_java7() {
+    sudo yum install -y wget
+    wget http://www.java.net/download/jdk7u2/archive/b08/binaries/jdk-7u2-ea-bin-b08-linux-x64-21_sep_2011.tar.gz
+    tar xzf jdk-7u2-ea-bin-b08-linux-x64-21_sep_2011.tar.gz
+    ln -s jdk1.7.0_02 jdk
+    echo "export JAVA_HOME=/mnt/data/jdk" >> ~/.bash_profile
+    echo "export PATH=\$JAVA_HOME/bin:\$PATH" >> ~/.bash_profile
+    source ~/.bash_profile
+}
+
 install_ruby() {
     sudo yum install -y ruby ruby-devel rubygems make gcc gcc-c++ \
         curl-devel openssl-devel zlib-devel
