@@ -1,0 +1,83 @@
+<?xml version="1.0"?><tsung loglevel="notice" version="1.0" dumptraffic="false">
+  <clients>
+    <client host="localhost" cpu="2"/>
+  </clients>
+  
+  <servers>
+    <server host="server" port="8080" type="tcp"/>
+  </servers>
+
+  <monitoring>
+    <monitor host="server" type="erlang"/>
+  </monitoring>
+
+  <load>
+    <arrivalphase phase="1" duration="2" unit="minute">
+      <users arrivalrate="2" unit="second"/>
+    </arrivalphase>
+
+    <arrivalphase phase="2" duration="2" unit="minute">
+      <users arrivalrate="4" unit="second"/>
+    </arrivalphase>
+
+    <arrivalphase phase="3" duration="2" unit="minute">
+      <users arrivalrate="6" unit="second"/>
+    </arrivalphase>
+
+    <arrivalphase phase="4" duration="2" unit="minute">
+      <users arrivalrate="8" unit="second"/>
+    </arrivalphase>
+
+    <arrivalphase phase="5" duration="2" unit="minute">
+      <users arrivalrate="10" unit="second"/>
+    </arrivalphase>
+
+    <arrivalphase phase="6" duration="10" unit="minute">
+      <users arrivalrate="15" unit="second"/>
+    </arrivalphase>
+
+    <arrivalphase phase="7" duration="10" unit="minute">
+      <users arrivalrate="20" unit="second"/>
+    </arrivalphase>
+
+    <arrivalphase phase="8" duration="10" unit="minute">
+      <users arrivalrate="25" unit="second"/>
+    </arrivalphase>
+
+    <arrivalphase phase="9" duration="10" unit="minute">
+      <users arrivalrate="30" unit="second"/>
+    </arrivalphase>
+
+    <arrivalphase phase="10" duration="10" unit="minute">
+      <users arrivalrate="35" unit="second"/>
+    </arrivalphase>
+
+    <arrivalphase phase="11" duration="72" unit="hour">
+      <users arrivalrate="40" unit="second"/>
+    </arrivalphase>
+
+  </load>
+
+  <sessions>
+
+    <session name="browse_site" probability="100" type="ts_http">
+      <request>
+        <http url="/" version="1.1" method="GET"/>
+      </request>
+
+      <thinktime random="true" value="5"/>
+
+      <request>
+        <http url="/products/ruby-on-rails-ringer-t-shirt" version="1.1" method="GET"/>
+      </request>
+
+      <thinktime random="true" value="5"/>
+
+      <request>
+        <http url="/t/brands/ruby-on-rails" version="1.1" method="GET"/>
+      </request>
+
+    </session>
+
+  </sessions>
+</tsung>
