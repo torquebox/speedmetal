@@ -1,0 +1,24 @@
+web:
+  context: /kitchen-sink
+
+queues:
+  /queues/a-kitchen-sink-queue:
+
+topics:
+  /topics/a-kitchen-sink-topic:
+
+messaging:
+  /queues/a-kitchen-sink-queue:
+    QueueProcessor
+  /topics/a-kitchen-sink-topic:
+    - OneTopicProcessor
+    - AnotherTopicProcessor
+    
+services:
+  AService:
+
+jobs:
+  message.producer:
+    job: MessageProducer
+    cron: "0/15 * * * * ?"
+    
