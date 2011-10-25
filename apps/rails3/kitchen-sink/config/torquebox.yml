@@ -1,6 +1,9 @@
 web:
   context: /kitchen-sink
 
+environment:
+  RACK_ENV: production
+
 queues:
   /queues/a-kitchen-sink-queue:
 
@@ -16,9 +19,17 @@ messaging:
     
 services:
   AService:
+  StatsService:
+    config:
+      sample_period: 10_000
+      output_directory: tmp
+      queues:
+        - '/queues/a-kitchen-sink-queue'
 
 jobs:
   message.producer:
     job: MessageProducer
-    cron: "0/15 * * * * ?"
-    
+    cron: "* * * * * ?"
+
+ruby:
+  interactive: true    
