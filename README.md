@@ -39,7 +39,7 @@ on my Mac, I had to
 
     ssh-add ~/.ssh/my_ec2_key.pem
 
-Login to the instance then run the setup_client.sh script.
+Login to the instance as the 'ec2-user' user then run the setup_client.sh script.
 
     curl -o setup_client.sh https://raw.github.com/torquebox/speedmetal/master/scripts/setup_client.sh
     chmod +x setup_client.sh
@@ -51,7 +51,7 @@ Login to the instance then run the setup_client.sh script.
 Launch instance of 'ami-e291668b' with size c1.xlarge in the same
 availability zone and security group as the Tsung instance.
 
-Login to the instance then run the setup_server.sh script.
+Login to the instance as the 'ec2-user' user then run the setup_server.sh script.
 
     curl -o setup_server.sh https://raw.github.com/torquebox/speedmetal/master/scripts/setup_server.sh
     chmod +x setup_server.sh
