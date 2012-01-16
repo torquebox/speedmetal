@@ -35,6 +35,10 @@ cd ../
 # Add /etc/hosts entry for our server instance
 echo "$SERVER_IP server" | sudo tee -a /etc/hosts
 
+# Open up iptables
+sudo iptables -I INPUT -p tcp -j ACCEPT
+sudo iptables -I INPUT -p udp -j ACCEPT
+
 echo ""
 echo "Client Setup Finished Successfully"
 echo ""

@@ -32,7 +32,7 @@ Maintenance Window: No Preference
 
 ## Launch Tsung Instance
 
-Launch instance of `ami-e291668b` with size m1.large. When SSHing into
+Launch instance of `ami-0316d86a` with size m1.large. When SSHing into
 the instance, make sure to use Agent Forwarding so we can SSH from the
 Tsung instance to other instances without a password. For this to work
 on my Mac, I had to
@@ -43,12 +43,12 @@ Login to the instance as the 'ec2-user' user then run the setup_client.sh script
 
     curl -o setup_client.sh https://raw.github.com/torquebox/speedmetal/master/scripts/setup_client.sh
     chmod +x setup_client.sh
-    ./setup_client.sh server_instance_ip_address
+    ./setup_client.sh server_instance_private_ip_address
 
 
 ## Launch Server Instance
 
-Launch instance of 'ami-e291668b' with size c1.xlarge in the same
+Launch instance of 'ami-0316d86a' with size c1.xlarge in the same
 availability zone and security group as the Tsung instance.
 
 Login to the instance as the 'ec2-user' user then run the setup_server.sh script.

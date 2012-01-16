@@ -14,21 +14,12 @@ When prompted to load sample data during db:bootstrap, choose yes.
 
 Create a deployment descriptor
 
-    rm -f $JBOSS_HOME/standalone/deployments/*-knob*
-    cat << EOF > $JBOSS_HOME/standalone/deployments/spree-knob.yml
-    ---
-    application:
-      root: /mnt/data/speedmetal/apps/rails3/spree/
-      env: production
-    web:
-      context: /
-    EOF
-    touch $JBOSS_HOME/standalone/deployments/spree-knob.yml.dodeploy
+    torquebox deploy --env=production
 
 Start TorqueBox
 
     screen
-    $JBOSS_HOME/bin/standalone.sh -Djboss.bind.address=0.0.0.0 -Dorg.torquebox.web.http.maxThreads=100
+    torquebox run -b 0.0.0.0 --max-threads=100
 
 
 
